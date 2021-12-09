@@ -6,18 +6,20 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      host: '',
+      host: 'seoyeon',
+      test: '',
     }
   }
+
+  //쿼리로 접근할 수 있는 api를 axios를 통해 요청
   componentDidMount() {
-    this._getHost();
+    this._dbTest();
   }
 
-//응답받은 값은 setState함수를 통해 host라는 state에 할당되고 화면 재랜더
-  _getHost = async () => {
-    const res = await axios.get('/api/host');
-    this.setState({host: res.data.host});
-  };
+_dbTest = async() => {
+  const res = await axios.get('/api/test');
+  console.log(res.data);
+}
 
   render() {
     return (
