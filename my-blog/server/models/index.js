@@ -17,31 +17,32 @@ const db = {};
 // config 변수를 사용해 Sequelize에 RDS 정보할당
 // 연동 성공시, "Connectoin has been established successfully." 출력
 // 연동 실패시, "Unable to connect to the database: "출력
+
 let sequelize = new Sequelize(
 	config.database,
 	config.username,
 	config.password,
 	config,
 	{
-		define: {
-			charset: 'utf-8',
-			collate: 'utf8_general_ci'
-		}
+	  define: {
+	    charset: 'utf8',
+	    collate: 'utf8_general_ci'
+	  }
 	}
-);
-
+      );
+      
 	db.sequelize = sequelize;
 	db.Sequelize = Sequelize;
-
-db.sequelize
-.authenticate()
-.then(() => {
-	console.log('Connectoin has been established successfully.');
-})
-.catch(err => {
-	console.log('Unable to connect to the database: ', err);
-})
-
-db.secret = '(9*)5$&!3%^0%^@@2$1!#5@2!4';
-module.exports = db;
+    
+	db.sequelize
+	.authenticate()
+	.then(() => {
+	    console.log('Connection has been established successfully.');
+	})
+	.catch(err => {
+	    console.log('Unable to connect to the database: ', err);
+	});
+    
+    db.secret = '(9*)5$&!3%^0%^@@2$1!#5@2!4';
+    module.exports = db;
 
