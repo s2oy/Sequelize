@@ -21,8 +21,21 @@ const {
 sequelize.query('SET NAMES utf8;');
 
 // client가 '/add/data'의 주소로 보내는 모든 데이터는 server로 전송됨
+// create method로 data를 추가할 수 있음
 app.post('/add/data', (req,res) => {
   console.log(req.body)
+
+    Teacher.create({
+      //teacher table의 name column에 client로 넘어온 req.body.data값을 추가함
+      name: req.body.data
+    })
+    .then( result => {
+      res.send(result)
+    })
+    .catch( err => {
+      console.log(err)
+      throw err;
+    })
 })
 
 const PORT = process.env.PORT || 4000;
