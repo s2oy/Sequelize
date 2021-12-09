@@ -41,8 +41,9 @@ app.post('/add/data', (req,res) => {
 //.findAll() 메서드는 해당 테이블의 모든 데이터를 조회하는 메서드: select from * teachers
 app.get('/get/data', (req, res) => {
   Teacher.findAll({
-    // james란 이름 조회
-    where: {name: 'James'}
+    // Number가 1번인 데이터와 Alan이란 이름의 데이터를 조회함
+    // 여러개의 데이터를 가져오기 위해선 [Op.or]을 사용한다. (or 연산자) !반드시 2개이상의 밸류를 조건으로 지정
+    where: {[Op.or]: [{id:1},{name: 'Alan'}]}
   })
   .then( result => { res.send(result) })
   .catch( err => { throw err })
