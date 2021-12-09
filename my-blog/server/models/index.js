@@ -49,25 +49,41 @@ let sequelize = new Sequelize(
 
 	/*
 	// 1:1관계 (Teacher:Class) 지정 메서드
-	// Teacher은 foreginkey를 제공하는 source모델이 됨
+	// Teacher은 foreignkey를 제공하는 source모델이 됨
 	// Class는 source를 제공받는 target모델이 됨
 	db.Teacher.hasOne(db.Class)
 	*/
 
+	/*
 	// 1:n관계 (Teacher:Classes) 지정 메서드
-	// 두개의 테이블이 두개의 foreginkey로 이루어진 관계
+	// 두개의 테이블이 두개의 foreignkey로 이루어진 관계
 	// 'hasMany'는 1:n 방식을 지정함
-	// Teacher 테이블의 id 값을 theacher_id라는 이름을 가진 foreginKey로 전달
+	// Teacher 테이블의 id 값을 theacher_id라는 이름을 가진 foreignKey로 전달
 	db.Teacher.hasMany(db.Class, {
 		foreignKey: 'teacher_id',
 		sourceKey: 'id'
 	});
-	// 'BelongsTo'는 source모델에 target모델의 foreginKey를 전달함
+	// 'BelongsTo'는 source모델에 target모델의 foreignKey를 전달함
 	// 일방항셩이 아닌 양방향의 관계를 나타내는 메소드임
 	db.Class.belongsTo(db.Teacher, {
 		foreignKey: 'teacher_id',
 		targetKey: 'id'
 	});
+	*/
+
+	// n:m관계 (Teachers:Classes) 지정 메서드
+	// 두개의 테이블이 여러개의 foreignKey
+	// n:m관계 지정 시 through로 새로운 테이블 생성 => 두개의 테이블의 foreignKey로 이루어진 두개의 Column 생성
+	db.Teacher.belongToMany(db.Class, {
+		through: 'schedule',
+		foreignKey: 'teacher_id'
+	});
+	db.Class.belongToMany(db.Teacher, {
+		through: 'schedule',
+		foreignKey: 'class_id',
+	});
+
+
 
 
     
