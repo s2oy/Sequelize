@@ -10,17 +10,18 @@ const bodyParser = require('body-parser')
 sequelize.sync();
 
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+// Teacher table을 서버로 가져와 읽을 수 있게 함
 const {
-  Teacher,
-  Sequelize: { Op }
-} = require('./models');
-sequelize.query('SET NAMES utf8');
+    Teacher,
+    Sequelize: { Op }
+  } = require('./models');
+sequelize.query('SET NAMES utf8;');
 
-// client가 '/app/data'의 주소로 보내는 모든 데이터는 server로 전송됨
-app.post('/app/data', (req,res) => {
+// client가 '/add/data'의 주소로 보내는 모든 데이터는 server로 전송됨
+app.post('/add/data', (req,res) => {
   console.log(req.body)
 })
 

@@ -11,14 +11,17 @@ class App extends Component {
     }
   }
 
-  //쿼리로 접근할 수 있는 api를 axios를 통해 요청
+  //api 받아오기
   componentDidMount() {
-    this._dbTest();
+    this._addData();
   }
 
-_dbTest = async() => {
-  const res = await axios.get('/api/test');
-  console.log(res.data);
+_addData = async(e) => {
+  console.log(await axios('/add/data', {
+    method: 'POST',
+    data: { 'test' : 'Complate!' },
+    headers: new Headers()
+  }))
 }
 
   render() {
