@@ -38,12 +38,14 @@ app.post('/add/data', (req,res) => {
     })
 })
 
-//.findAll() 메서드는 해당 테이블의 모든 데이터를 조회하는 메서드: select from * teachers
+// server에서 데이터를 client로 전송할 때의 형태
+// findAll: Array
+// findOne: Object
 app.get('/get/data', (req, res) => {
-  Teacher.findAll({
-    // Number가 1번인 데이터와 Alan이란 이름의 데이터를 조회함
-    // 여러개의 데이터를 가져오기 위해선 [Op.or]을 사용한다. (or 연산자) !반드시 2개이상의 밸류를 조건으로 지정
-    where: {[Op.or]: [{id:1},{name: 'Alan'}]}
+  Teacher.findOne({
+    // findOne과 where을 사용하여 하나의 데이터만 가져올 수 있음
+    // findOne은 반드시 where과 함께 사용해야한다.
+    where: { id: 2 }
   })
   .then( result => { res.send(result) })
   .catch( err => { throw err })
