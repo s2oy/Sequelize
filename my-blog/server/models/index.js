@@ -46,6 +46,11 @@ let sequelize = new Sequelize(
 	//DB정보를 담은 db 오브젝트에 teacher의 이름으로 키값넣고 밸류 값 담기
 	db.Teacher = require('./teacher')(sequelize, Sequelize);
 	db.Class = require('./class')(sequelize, Sequelize);
+
+	// 1:1관계 (Teacher:Class) 지정 메서드
+	// Teacher은 foreginkey를 제공하는 source모델이 됨
+	// Class는 source를 제공받는 target모델이 됨
+	db.Teacher.hasOne(db.Class)
     
     db.secret = '(9*)5$&!3%^0%^@@2$1!#5@2!4';
     module.exports = db;
