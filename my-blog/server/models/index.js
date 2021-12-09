@@ -45,6 +45,7 @@ let sequelize = new Sequelize(
 
 	//DB정보를 담은 db 오브젝트에 teacher의 이름으로 키값넣고 밸류 값 담기
 	db.Teacher = require('./teacher')(sequelize, Sequelize);
+	db.Class = require('./class')(sequelize, Sequelize);
     
     db.secret = '(9*)5$&!3%^0%^@@2$1!#5@2!4';
     module.exports = db;
