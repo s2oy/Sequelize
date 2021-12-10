@@ -1,6 +1,8 @@
 //express 모듈 불러와 app에 담아서 서버를 관리함
 const express = require('express');
 const app = express();
+//route.js에 접근
+const router = require('./route'); 
 
 //sequelize 연결
 const sequelize = require('./models').sequelize;
@@ -13,6 +15,8 @@ sequelize.sync();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+app.use('/', router);
 
 // Teacher table을 서버로 가져와 읽을 수 있게 함
 const {
