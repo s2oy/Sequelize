@@ -38,20 +38,18 @@ app.post('/add/data', (req,res) => {
     })
 })
 
-//update 메서드는 데이터를 변경해줌
 app.get('/get/data', (req, res) => {
   Teacher.findAll()
   .then( result => { res.send(result) })
   .catch( err => { throw err })
 })
 
-//[Op.or] 연산자를 이용해 여러개의 데이터 값 변경하기
 app.post('/modify/data', (req,res) => {
-  Teacher.update({ name: 'Same_name'}, {
-    where: {[Op.or]: [{ id: 1}, {name: 'Alan'}]}
+  Teacher.update({ name: req.body.modify.name}, {
+    where: {id: req.body.modify.id}
   })
   .then ( result => { res.send(result) })
-  .catch( err => { throw err })
+  .catch( err => {throw err })
 })
 
 const PORT = process.env.PORT || 4000;
