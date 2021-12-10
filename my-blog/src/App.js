@@ -48,12 +48,35 @@ class App extends Component {
     this.setState({ list : res.data });
   }
 
+  _modify = async (el) => {
+    const modify = prompt(el.name + '을 어떤 이름으로 변경할까요?')
+
+    if(modify !== null) {
+      const body = {
+        name : modify,
+        id : el.id
+      }
+
+      const res = await axios('/modify/data', {
+        method : 'POST',
+        data : { 'modify' : body },
+        headers: new Headers()
+      })
+
+      if(res.data) {
+        alert('데이터를 수정했습니다.')
+        return window.location.reload();
+      }
+    }
+  }
+
   render() {
     const { list } = this.state;
 
     return(
       <div className='App'>
         <h3> Welcome to <u> seoyeon </u> Blog! </h3>
+        <h5> https://trudy610.blog.me/ </h5>
 
         <br />
         <form method='POST' onSubmit={this._addData}>
@@ -76,9 +99,12 @@ class App extends Component {
             {list.length !== 0
               ? list.map( (el, key) => {
                 return(
-                  <div key={key} style={{ display : 'grid', lineHeight : '40px', gridTemplateColumns : '32% 35%', width : '50%', marginLeft : '25%'}}>
+                  <div key={key} style={{ display : 'grid', lineHeight : '40px', gridTemplateColumns : '32% 35% 30%', width : '50%', marginLeft : '25%'}}>
                     <div> {el.id} </div>
                     <div> {el.name} </div>
+                    <div
+                      style={{ color : '#ababab' }} 
+                      onClick={() => this._modify(el)}> Modify </div>
                   </div>
                 )
               })

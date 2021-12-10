@@ -38,16 +38,19 @@ app.post('/add/data', (req,res) => {
     })
 })
 
-// server에서 데이터를 client로 전송할 때의 형태
-// findAll: Array
-// findOne: Object
+//update 메서드는 데이터를 변경해줌
 app.get('/get/data', (req, res) => {
-  Teacher.findOne({
-    // findOne과 where을 사용하여 하나의 데이터만 가져올 수 있음
-    // findOne은 반드시 where과 함께 사용해야한다.
-    where: { id: 2 }
-  })
+  Teacher.findAll()
   .then( result => { res.send(result) })
+  .catch( err => { throw err })
+})
+
+//[Op.or] 연산자를 이용해 여러개의 데이터 값 변경하기
+app.post('/modify/data', (req,res) => {
+  Teacher.update({ name: 'Same_name'}, {
+    where: {[Op.or]: [{ id: 1}, {name: 'Alan'}]}
+  })
+  .then ( result => { res.send(result) })
   .catch( err => { throw err })
 })
 
