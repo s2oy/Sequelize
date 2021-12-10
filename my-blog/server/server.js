@@ -8,6 +8,7 @@ const sequelize = require('./models').sequelize;
 const bodyParser = require('body-parser')
 
 sequelize.sync();
+// sequelize.sync({ force: true }); // 모든 테이블의 데이터 초기화
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -38,18 +39,29 @@ app.post('/add/data', (req,res) => {
     })
 })
 
+// findAll로 데이터 조회
 app.get('/get/data', (req, res) => {
   Teacher.findAll()
   .then( result => { res.send(result) })
   .catch( err => { throw err })
 })
 
+//update 메서드는 데이터를 변경해줌
 app.post('/modify/data', (req,res) => {
   Teacher.update({ name: req.body.modify.name}, {
     where: {id: req.body.modify.id}
   })
   .then ( result => { res.send(result) })
   .catch( err => {throw err })
+})
+
+//destory 메서드로 데이터 삭제 (어떤 대상을 삭제할지 where에서 인자값전달)
+app.post('/delete/data', (req, res) => {
+  Teacher.destroy({
+      where : { id: req.body.delete.id }
+  })
+  .then( res.sendStatus(200) )
+  .catch( err => { throw err })
 })
 
 const PORT = process.env.PORT || 4000;
